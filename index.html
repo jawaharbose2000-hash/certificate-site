@@ -1,18 +1,294 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Vaccination Certificate</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K-KEN VPN | Login</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+        background:
+            radial-gradient(circle at 15% 20%, rgba(25,195,125,.18), transparent 28%),
+            radial-gradient(circle at 85% 75%, rgba(61,140,255,.18), transparent 30%),
+            linear-gradient(135deg, #07111f, #0d1b2e 55%, #102a43);
+        color: #fff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .price-tag {
+        position: fixed;
+        top: 8%;
+        right: 7%;
+        padding: 20px 28px;
+        border-radius: 18px;
+        background: rgba(25,195,125,.14);
+        border: 1px solid rgba(25,195,125,.45);
+        box-shadow: 0 12px 40px rgba(0,0,0,.3);
+        transform: rotate(5deg);
+        text-align: center;
+        z-index: 0;
+        user-select: none;
+    }
+    .price-tag .amount {
+        display: block;
+        font-size: 32px;
+        font-weight: 900;
+        color: #70e0b2;
+    }
+    .price-tag .coin {
+        display: block;
+        margin-top: 4px;
+        font-size: 15px;
+        letter-spacing: 2px;
+        color: #dbe5ee;
+        text-transform: uppercase;
+    }
+    .price-tag::after {
+        content: "";
+        position: absolute;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: #0b1726;
+        border: 2px solid #70e0b2;
+        top: 12px;
+        left: 12px;
+    }
+    .card {
+        width: min(92%, 600px);
+        max-height: 92vh;
+        overflow-y: auto;
+        padding: 38px;
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 22px;
+        background: rgba(10, 20, 35, .88);
+        box-shadow: 0 20px 60px rgba(0,0,0,.45);
+        backdrop-filter: blur(12px);
+    }
+
+    /* Scrollbar beside the form */
+    .card::-webkit-scrollbar {
+        width: 10px;
+    }
+    .card::-webkit-scrollbar-track {
+        background: rgba(255,255,255,.05);
+        border-radius: 10px;
+    }
+    .card::-webkit-scrollbar-thumb {
+        background: #19c37d;
+        border-radius: 10px;
+    }
+    .card::-webkit-scrollbar-thumb:hover {
+        background: #70e0b2;
+    }
+    .card {
+        scrollbar-width: thin;
+        scrollbar-color: #19c37d rgba(255,255,255,.05);
+    }
+    .logo {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 18px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #19c37d, #087f5b);
+        font-size: 25px;
+        font-weight: 800;
+    }
+    h1 { text-align: center; font-size: 29px; margin-bottom: 7px; }
+    .subtitle { text-align: center; color: #aebdcc; margin-bottom: 28px; }
+    label { display:block; margin: 15px 0 7px; color:#dbe5ee; font-size:14px; }
+    input {
+        width: 100%;
+        padding: 14px 15px;
+        border-radius: 11px;
+        border: 1px solid #34495e;
+        background: #111f30;
+        color: #fff;
+        outline: none;
+        font-size: 15px;
+    }
+    input:focus, select:focus { border-color:#19c37d; }
+    select {
+        width: 100%;
+        padding: 14px 15px;
+        border-radius: 11px;
+        border: 1px solid #34495e;
+        background: #111f30;
+        color: #fff;
+        outline: none;
+        font-size: 15px;
+    }
+    button {
+        width: 100%;
+        margin-top: 23px;
+        padding: 14px;
+        border: 0;
+        border-radius: 11px;
+        background: #19c37d;
+        color: #04150e;
+        font-weight: 800;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover { filter: brightness(1.08); }
+    #message { min-height: 22px; text-align:center; margin-top:15px; font-size:14px; }
+    .footer { text-align:center; color:#71849a; font-size:12px; margin-top:25px; }
+    .dashboard { display:none; text-align:center; }
+    .status {
+        margin: 22px 0;
+        padding: 15px;
+        border-radius: 12px;
+        background: rgba(25,195,125,.12);
+        color:#70e0b2;
+    }
+    .logout { background:#26384c; color:#fff; }
+    .submit-request {
+        margin-bottom: 10px;
+    }
+    .form-bottom-space {
+        height: 18px;
+    }
+</style>
 </head>
+<body>
+<div class="price-tag">
+    <span class="amount">299</span>
+    <span class="coin">Cardano • ADA</span>
+</div>
 
-<body style="font-family:Arial;text-align:center;margin-top:100px;">
+<div class="card">
+    <div id="login">
+        <div class="logo">K</div>
+        <h1>K-KEN VPN</h1>
+        <p class="subtitle">Secure VPN Client Portal</p>
 
-<h1>Vaccination Certificate</h1>
+        <form onsubmit="login(event)">
+            <label for="username">User ID</label>
+            <input id="username" type="text" autocomplete="username" placeholder="Enter user ID" required>
 
-<p>Click below to open certificate.</p>
+            <label for="password">Password</label>
+            <input id="password" type="password" autocomplete="current-password" placeholder="Enter password" required>
 
-<a href="file:///C:/Users/jawah/Downloads/k-ken-vpn-login%20(1).html">
-OPEN CERTIFICATE
-</a>
+            <button type="submit">Sign In</button>
+            <div id="message"></div>
+        </form>
+        <div class="footer">© 2026 K-KEN VPN</div>
+    </div>
 
+    <div id="details" class="dashboard">
+        <div class="logo">K</div>
+        <h1>Device & Subscription</h1>
+        <p class="subtitle">Enter your VPN activation details</p>
+
+        <form onsubmit="submitDetails(event)">
+            <label for="deviceId">Device ID</label>
+            <input id="deviceId" type="text" placeholder="Enter device ID" required>
+
+            <label for="location">Location</label>
+            <input id="location" type="text" placeholder="Enter location" required>
+
+            <label for="access">Access</label>
+            <select id="access" required>
+                <option value="">Select access type</option>
+                <option>New VPN Access</option>
+                <option>Renewal</option>
+                <option>Device Change</option>
+            </select>
+
+            <label for="subscription">Weekly Subscription</label>
+            <select id="subscription" required>
+                <option value="">Select subscription</option>
+                <option>1 Week — 299 ADA</option>
+            </select>
+
+            <label for="paymentId">ADA Payment ID</label>
+            <input id="paymentId" type="text" placeholder="Enter ADA payment ID" required>
+
+            <label for="transaction">Transaction Number</label>
+            <input id="transaction" type="text" placeholder="Enter transaction number" required>
+
+            <label for="deliveryDate">Expected Delivery Date</label>
+            <input id="deliveryDate" type="date" required>
+
+            <button type="submit" class="submit-request">Submit Request</button>
+            <div id="detailsMessage"></div>
+            <div class="form-bottom-space"></div>
+        </form>
+
+        <button class="logout" onclick="logout()">Log Out</button>
+    </div>
+
+    <div id="confirmation" class="dashboard">
+        <div class="logo">✓</div>
+        <h1>Request Submitted</h1>
+        <div class="status">Your K-KEN VPN activation request has been recorded.</div>
+        <p style="color:#aebdcc;">Please keep your payment ID and transaction number for your records.</p>
+        <button class="logout" onclick="logout()">Log Out</button>
+    </div></div>
+
+<script>
+/*
+  DEMO LOGIN ONLY.
+  User ID: JB
+  Password: JB009
+  For a real product, authentication and payment verification must be handled by a secure backend.
+*/
+const DEMO_USERNAME = "JB";
+const DEMO_PASSWORD = "JB009";
+
+function login(e) {
+    e.preventDefault();
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value;
+    const msg = document.getElementById("message");
+
+    if (u === DEMO_USERNAME && p === DEMO_PASSWORD) {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("details").style.display = "block";
+        msg.textContent = "";
+    } else {
+        msg.textContent = "Invalid User ID or password.";
+        msg.style.color = "#ff7b7b";
+    }
+}
+
+function submitDetails(e) {
+    e.preventDefault();
+
+    const msg = document.getElementById("detailsMessage");
+    msg.textContent = "Submitting...";
+    msg.style.color = "#70e0b2";
+
+    // Demo behavior: show confirmation. A real site should POST these fields
+    // to a secure backend over HTTPS and never store payment credentials in HTML.
+    setTimeout(() => {
+        document.getElementById("details").style.display = "none";
+        document.getElementById("confirmation").style.display = "block";
+    }, 400);
+}
+
+function logout() {
+    document.getElementById("confirmation").style.display = "none";
+    document.getElementById("details").style.display = "none";
+    document.getElementById("login").style.display = "block";
+
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("message").textContent = "";
+
+    document.querySelectorAll("#details input").forEach(el => el.value = "");
+    document.getElementById("access").value = "";
+    document.getElementById("subscription").value = "";
+    document.getElementById("detailsMessage").textContent = "";
+}
+</script>
 </body>
 </html>
